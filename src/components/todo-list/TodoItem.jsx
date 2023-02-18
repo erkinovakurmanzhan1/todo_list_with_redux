@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { todoActionTypes } from "../../store/todoReducer/todoReducer";
+import { todoActions } from "../../store/todoSlice/todoSlice";
 import Button from "../../UI/Button";
 
 const TodoItem = ({ text, element }) => {
@@ -10,29 +10,18 @@ const TodoItem = ({ text, element }) => {
   const [newValue, setValue] = useState("");
 
   const completedHandler = () => {
-    dispatch({
-      type: todoActionTypes.COMPLETED,
-      payload: element.id,
-    });
+    dispatch(todoActions.completed(element.id));
   };
 
   const deleteHandler = () => {
-    dispatch({
-      type: todoActionTypes.DELETE,
-      payload: element.id,
-    });
+    dispatch(todoActions.delete(element.id));
   };
 
   const saveInputChange = (event) => {
     setValue(event.target.value);
   };
-
   const saveButtonHandler = () => {
-    dispatch({
-      type: todoActionTypes.EDIT,
-      id: element.id,
-      payload: newValue,
-    });
+    dispatch(todoActions.edit({ id: element.id, value: newValue }));
     setEdit(false);
   };
 

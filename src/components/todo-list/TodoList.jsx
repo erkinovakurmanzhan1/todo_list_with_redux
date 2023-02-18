@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { todoActionTypes } from "../../store/todoReducer/todoReducer";
+import { todoActions } from "../../store/todoSlice/todoSlice";
 import Button from "../../UI/Button";
 import Header from "../header/Header";
 import Todo from "./Todo";
@@ -15,24 +15,22 @@ const TodoList = () => {
   };
 
   const addHandler = () => {
-    dispatch({
-      type: todoActionTypes.ADD,
-      payload: text,
-    });
+    const data = {
+      id: Date.now().toString(),
+      text: text,
+    };
+    dispatch(todoActions.addTodo(data));
 
     setText("");
   };
 
   const allDeleteHandler = () => {
-    dispatch({
-      type: todoActionTypes.DELETE_ALL,
-      payload: [],
-    });
+    dispatch(todoActions.deleteAll([]));
   };
   return (
     <>
       <Header />
-      
+
       <Container>
         <div>
           <Input
@@ -47,7 +45,9 @@ const TodoList = () => {
           <AddButton disabled={!enebled} onClick={addHandler}>
             Add
           </AddButton>
-          <Button color='#176777' onClick={allDeleteHandler}>All delete</Button>
+          <Button color="#176777" onClick={allDeleteHandler}>
+            All delete
+          </Button>
         </BtnContainer>
       </Container>
 
@@ -74,7 +74,7 @@ const Container = styled.div`
 const BtnContainer = styled.div`
   display: flex;
   gap: 1rem;
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 `;
 const Input = styled.input`
   color: #0a0a70;

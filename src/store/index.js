@@ -1,10 +1,10 @@
-import { combineReducers, createStore } from "redux";
-import { registrationReducer } from "./authReducer/authReducer";
-import { todoReducer } from "./todoReducer/todoReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import { registrationSlice } from "./authSlice/authSlice";
+import { todoSlice } from "./todoSlice/todoSlice";
 
-const rootReducer = combineReducers({
-  registration: registrationReducer,
-  todo: todoReducer,
+export const store = configureStore({
+  reducer: {
+    registration: registrationSlice.reducer,
+    todo: todoSlice.reducer,
+  },
 });
-
-export const store = createStore(rootReducer);
